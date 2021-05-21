@@ -19,8 +19,14 @@ function listTags(e){
           let sli = document.createElement("li");
           sli.innerHTML = mySli[i].tag_name;
           sul.appendChild(sli);
-    } 
-}
+    
+    for(j = 0; j < mySli[i].tag_name.length; j++){
+        let vli = document.createElement("li");
+        vli.innerHTML = mySli[i].tag_values[j];
+        sli.appendChild(vli);
+        }
+    }
+} 
   oReq.addEventListener("load", listLoad);
   olReq.addEventListener("load", listTags);
   oReq.open("GET", "/api/users");
