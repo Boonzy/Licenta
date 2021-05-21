@@ -25,4 +25,10 @@ router.get('/users', function(req, res, next) {
     });
 });
 
+router.get('/tags', function(req, res, next) {
+    pool.query('SELECT * from tags', (err, dbRes) => {
+        console.log(err, dbRes)
+        res.send(dbRes.rows);
+    });
+});
 module.exports = router;

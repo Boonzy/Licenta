@@ -40,7 +40,7 @@ a {
     grid-area: document;
 }
 
-#sList li{
+#cList li{
  display: block;
 }
 .hidden{
