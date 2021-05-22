@@ -57,18 +57,28 @@ function listDocuments(e){
               row.innerHTML = "<td>" + myLi[i].document_name + "</td>" + "<td>" + myLi[i].document_description + "</td>" + "<td>" + Object.values(myLi[i].document_tags) + "</td>";
               ul.appendChild(table);
               table.appendChild(row);
-            }
-}              
-function editRow(){
+            }              
+editRow = () => {
     document.getElementById("modifyForm").style.display = "block";
-
+    for(i = 0; i < myLi.length; i++){
+        txtField.setAttribute("type", "text");
+        txtField.value = myLi[i].document_name;
+        modifyForm.appendChild(txtField);
+        }
+    
 }
-function addRow(){
+let txtField = document.createElement("input");
+ addRow = () => {
     document.getElementById("modifyForm").style.display = "block";
-
+    for(i = 0; i < myLi.length; i++){
+        txtField.setAttribute("type", "text");
+        modifyForm.appendChild(txtField);
+        }
+}
 }
 function exitBtn(){
     document.getElementById("modifyForm").style.display = "none";
+
 }
 
 function srcBar(){

@@ -70,7 +70,7 @@ tr:hover {
   outline: none;
   color: rgb(0, 0, 0);
 }
-.cBtn{
+.dBtn{
   background-color: white;
   width: 7rem;
   margin: 1rem;
@@ -92,4 +92,26 @@ tr:hover {
   position: fixed;
   left:35%;
   bottom:20%;
+}
+.aBtn{
+  background-color: white;
+  width: 7rem;
+  margin: 1rem;
+  border: 0.3rem solid rgb(121, 122, 122);
+  height: auto;
+  padding: 0.5rem 0.1rem 0.5rem 0.1rem;
+  border-radius: 5rem;
+  outline: none;
+  color: rgb(0, 0, 0);
+}
+.eBtn{
+  background-color: white;
+  width: 7rem;
+  margin: 1rem;
+  border: 0.3rem solid rgb(121, 122, 122);
+  height: auto;
+  padding: 0.5rem 0.1rem 0.5rem 0.1rem;
+  border-radius: 5rem;
+  outline: none;
+  color: rgb(0, 0, 0);
 }
