@@ -9,11 +9,19 @@
     <div class="container">
       <div class="header-container"><p>Universitatea Romano-Americana</p></div>
       <div class="side-container">
+        <h3>Suport Curs</h3>
       <ul id="sList"></ul>
       </div>
       <div class="document-container">
-          <input type="text" placeholder="Type Here.." id="contentSearch" onkeyup="srcBar()">
-          <ul id="cList"></ul>
+          <input type="text" placeholder="Type Here..." id="contentSearch" class="contentSearch" onkeyup="srcBar()">
+          <button type="button" class="cBtn" id="addBtn" onclick="addRow()">Add</button>
+          <button type="button" class="cBtn" id="editBtn" onclick="editRow()">Edit</button>
+          <button type="button" class="cBtn" id="removeBtn" onclick="deleteRow()">Remove</button>
+          <div id="modifyForm" class="modal">
+            SOME TEXT IN HERE
+            <button onclick="exitBtn()">Close</button>
+            </div>
+          <div id="cList"></div>
       </div>
     </div>
   </body>

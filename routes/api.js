@@ -26,7 +26,13 @@ router.get('/users', function(req, res, next) {
 });
 
 router.get('/tags', function(req, res, next) {
-    pool.query('SELECT * from tags', (err, dbRes) => {
+    pool.query('select * from tags order by tag_id asc;', (err, dbRes) => {
+        console.log(err, dbRes)
+        res.send(dbRes.rows);
+    });
+});
+router.get('/documents', function(req, res, next) {
+    pool.query('select * from documents', (err, dbRes) => {
         console.log(err, dbRes)
         res.send(dbRes.rows);
     });
