@@ -1,5 +1,5 @@
 body {
-  background-color: rgb(68, 68, 68);
+  background-color: rgb(56, 56, 56);;
   padding: 2rem;
   font: 20px "Arial";
 }
@@ -19,7 +19,6 @@ a {
 
 .container div {
   text-align:left;
-  background: rgb(37, 37, 37);
   color: white;
 }
 .pannelDiv{
@@ -29,13 +28,17 @@ a {
 .header-container{
   grid-area: header;
   font-size: 1.5rem;
+  padding:0.5rem 0rem 0rem 0.5rem;
+  background-color:  #262627;
 }
 .side-container{
     grid-area: side;
     height: max-content;
+    background-color:  #181818;
 }
 .document-container{
     grid-area: document;
+    background-color:  #1d1d1d;
 }
 
 #cList li{
@@ -48,12 +51,15 @@ a {
 .hidden{
 display: none !important;
 }
-
-td{
-  border-bottom: 0.1rem solid white ;
-  border-collapse: collapse; 
-  padding : 0rem 0.5rem 0rem 0.5rem;
+table{
+  border-collapse: collapse;
 }
+td{
+  white-space: nowrap;
+  border-bottom: 0.1rem solid white ;
+  padding : 0rem 1rem 0rem 1rem;
+}
+
 tr:hover {
   background-color: rgba(169, 169, 169, 0.37);
 }

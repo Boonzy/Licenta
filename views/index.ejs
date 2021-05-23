@@ -11,18 +11,23 @@
 
 <body>
   <div class="container">
-    <div class="header-container pannelDiv ">
-      <p>Universitatea Romano-Americana</p>
+    <div class="header-container">
+      <div>
+        <img src="D:\Licenta\Licenta\public\images\S6W9yfEf_400x400-removebg-preview.png" width="40" height="40" style="float: left;padding-right: 0.5rem;">
+        <p>Universitatea Romano-Americana</p>
+      </div>
     </div>
     <div class="side-container">
       <h3>Suport Curs</h3>
       <ul id="sList"></ul>
     </div>
     <div class="document-container">
-      <input type="text" placeholder="Type Here..." id="contentSearch" class="contentSearch" onkeyup="srcBar()">
-      <button type="button" class="aBtn" id="addBtn" onclick="addRow()">Add</button>
-      <button type="button" class="eBtn" id="editBtn" onclick="editRow()">Edit</button>
-      <button type="button" class="dBtn" id="removeBtn" onclick="deleteRow()">Remove</button>
+      <div>
+        <input type="text" placeholder="Type Here..." id="contentSearch" class="contentSearch" onkeyup="srcBar()">
+        <button type="button" class="aBtn" id="addBtn" onclick="addRow()">Add</button>
+        <button type="button" class="eBtn" id="editBtn" onclick="editRow()">Edit</button>
+        <button type="button" class="dBtn" id="removeBtn" onclick="deleteRow()">Remove</button>
+      </div>
       <div id="modifyForm" class="modal hidden roundBorders">
         <div class="modalHeader">
           <button type="button" class="exitBtn" id="exitBtn" onclick="exitBtn()">Close</button>

@@ -59,7 +59,10 @@ function listDocuments(e) {
         let row = document.createElement("tr");
         row.onclick = highlightRow;
         row.setAttribute("row_data", JSON.stringify(docs[i]))
-        row.innerHTML = "<td>" + myLi[i].document_name + "</td>" + "<td>" + myLi[i].document_description + "</td>" + "<td>" + Object.values(myLi[i].document_tags) + "</td>";
+        row.innerHTML = `<td>${myLi[i].document_name}</td>
+            <td>${myLi[i].document_description}</td>
+            <td>${Object.values(myLi[i].document_tags)}</td>
+            <td><a href="${myLi[i].document_link}" target="_blank">Link</a></td>`;
         ul.appendChild(table);
         table.appendChild(row);
     }
