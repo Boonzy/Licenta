@@ -1,28 +1,47 @@
 <!DOCTYPE html>
 <html>
-  <script src="javascripts/index.js"></script>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <div class="container">
-      <div class="header-container"><p>Universitatea Romano-Americana</p></div>
-      <div class="side-container">
-        <h3>Suport Curs</h3>
-      <ul id="sList"></ul>
-      </div>
-      <div class="document-container">
-          <input type="text" placeholder="Type Here..." id="contentSearch" class="contentSearch" onkeyup="srcBar()">
-          <button type="button" class="aBtn" id="addBtn" onclick="addRow()">Add</button>
-          <button type="button" class="eBtn" id="editBtn" onclick="editRow()">Edit</button>
-          <button type="button" class="dBtn" id="removeBtn" onclick="deleteRow()">Remove</button>
-          <div id="modifyForm" class="modal">
-            SOME TEXT IN HERE
-            <button onclick="exitBtn()">Close</button>
-            </div>
-          <div id="cList"></div>
-      </div>
+<script src="javascripts/index.js"></script>
+
+<head>
+  <title>
+    <%= title %>
+  </title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+  <div class="container">
+    <div class="header-container pannelDiv ">
+      <p>Universitatea Romano-Americana</p>
     </div>
-  </body>
+    <div class="side-container">
+      <h3>Suport Curs</h3>
+      <ul id="sList"></ul>
+    </div>
+    <div class="document-container">
+      <input type="text" placeholder="Type Here..." id="contentSearch" class="contentSearch" onkeyup="srcBar()">
+      <button type="button" class="aBtn" id="addBtn" onclick="addRow()">Add</button>
+      <button type="button" class="eBtn" id="editBtn" onclick="editRow()">Edit</button>
+      <button type="button" class="dBtn" id="removeBtn" onclick="deleteRow()">Remove</button>
+      <div id="modifyForm" class="modal hidden roundBorders">
+        <div class="modalHeader">
+          <button type="button" class="exitBtn" id="exitBtn" onclick="exitBtn()">Close</button>
+          <button type="button" class="applyBtn" id="applyBtn" onclick="applyBtn()">Apply</button>
+        </div>
+        <div class="modalContent pannelDiv">
+          <div>
+            <input type="text" id="document_name" placeholder="Nume Document..." title="Nume Document" class="blockSmallSpace">
+            <textarea id="document_description" placeholder="Descriere Document..." title="Descriere Document" class="blockSmallSpace"></textarea>
+            <input type="text" id="document_link" placeholder="Link Document..." title="Link Document" class="blockSmallSpace">
+            <br>
+          </div>
+          <span>Valori Atribute</span>
+          <div id="tag_values" class="tagValues"></div>
+        </div>
+      </div>
+      <div id="cList"></div>
+    </div>
+  </div>
+</body>
+
 </html>

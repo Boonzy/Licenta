@@ -18,16 +18,13 @@ a {
 }
 
 .container div {
-  padding: 1rem;
-  margin: 1rem;
   text-align:left;
   background: rgb(37, 37, 37);
   color: white;
-  border-radius: 25px;
-  box-shadow: inset 0 -3em 3em rgba(0,0,0,0.1),
-                    0 0  0 2px rgb(255,255,255),
-                    0.3em 0.3em 1em rgb(0, 0, 0);
-
+}
+.pannelDiv{
+  padding: 1rem;
+  margin: 1rem;
 }
 .header-container{
   grid-area: header;
@@ -35,6 +32,7 @@ a {
 }
 .side-container{
     grid-area: side;
+    height: max-content;
 }
 .document-container{
     grid-area: document;
@@ -59,7 +57,9 @@ td{
 tr:hover {
   background-color: rgba(169, 169, 169, 0.37);
 }
-
+.selectedTr{
+  background-color: rgba(255, 0, 0, 0.24);
+}
 .contentSearch{
   margin: 1rem;
   width: 20rem;
@@ -85,13 +85,16 @@ tr:hover {
   background-color: rgb(207, 207, 207);
 }
 .modal{
-  display: none;
+  overflow: hidden;
   z-index: 10;
-  height: 20rem;
-  width: 20rem;
+  height: 30rem;
+  width: 50rem;
   position: fixed;
-  left:35%;
-  bottom:20%;
+  top: 5rem;
+  left: 15rem;
+}
+.tagValues{
+
 }
 .aBtn{
   background-color: white;
@@ -114,4 +117,43 @@ tr:hover {
   border-radius: 5rem;
   outline: none;
   color: rgb(0, 0, 0);
+}
+
+.exitBtn{ 
+  background-color: white;
+  width: 7rem;
+  margin: 1rem;
+  border: 0.3rem solid rgb(121, 122, 122);
+  height: auto;
+  padding: 0.5rem 0.1rem 0.5rem 0.1rem;
+  border-radius: 5rem;
+  outline: none;
+  color: rgb(0, 0, 0);
+}
+
+.modalContent{
+  overflow-y: auto;
+  height: 20rem;
+}
+
+.applyBtn{
+  background-color: white;
+  width: 7rem;
+  margin: 1rem;
+  border: 0.3rem solid rgb(121, 122, 122);
+  height: auto;
+  padding: 0.5rem 0.1rem 0.5rem 0.1rem;
+  border-radius: 5rem;
+  outline: none;
+  color: rgb(0, 0, 0);
+}
+.roundBorders{
+  border-radius: 25px;
+  box-shadow: inset 0 -3em 3em rgba(0,0,0,0.1),
+                    0 0  0 2px rgb(255,255,255),
+                    0.3em 0.3em 1em rgb(0, 0, 0);
+}
+.blockSmallSpace{
+  display:block;
+  margin-bottom: 0.5rem;
 }
