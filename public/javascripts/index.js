@@ -79,6 +79,7 @@ addRow = () => {
     document.getElementById("modifyForm").classList.remove("hidden");
     let dul = document.createElement("ul");
     let sul = document.getElementById("tag_values");
+    sul.innerHTML = "";
     sul.appendChild(dul);
     for (i = 0; i < tags.length; i++) {
         let sli = document.createElement("li");
@@ -104,6 +105,7 @@ editRow = () => {
         document.getElementById("modifyForm").classList.remove("hidden");
         let dul = document.createElement("ul");
         let sul = document.getElementById("tag_values");
+        sul.innerHTML = "";
         sul.appendChild(dul);
         let document_name = document.getElementById("document_name");
         let document_description = document.getElementById("document_description");
