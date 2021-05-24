@@ -2,8 +2,8 @@ var express = require('express');
 var router = express.Router();
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Universitatea Romano-Americana' });
+router.get('/', function (req, res, next) {
+  res.render('index', { title: 'School Smart Solutions' });
 });
 
 module.exports = router;

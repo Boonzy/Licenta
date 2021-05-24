@@ -7,6 +7,10 @@ body {
 a {
   color: #00B7FF;
 }
+.headerFacultate{
+  padding-top: 1.2rem;
+  font-size: 2rem;
+}
 .container{
   display: grid;
   width: 100%;
@@ -91,6 +95,7 @@ tr:hover {
   background-color: rgb(207, 207, 207);
 }
 .modal{
+  background-color: #262627;
   overflow: hidden;
   z-index: 10;
   height: 30rem;
@@ -98,9 +103,6 @@ tr:hover {
   position: fixed;
   top: 5rem;
   left: 15rem;
-}
-.tagValues{
-
 }
 .aBtn{
   background-color: white;
@@ -162,4 +164,10 @@ tr:hover {
 .blockSmallSpace{
   display:block;
   margin-bottom: 0.5rem;
+  width: 20rem;
+  border: 0.3rem solid rgb(121, 122, 122);
+  padding: 0.5rem 0.1rem 0.5rem 1rem;
+  border-radius: 5rem;
+  outline: none;
+  color: rgb(0, 0, 0);
 }
