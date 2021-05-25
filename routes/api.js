@@ -57,4 +57,14 @@ router.post('/updateDoc', function (req, res, next) {
     });
     console.log(req);
 });
+router.delete('/deleteDoc', function (req, res, next) {
+    let text = 'delete from documents where document_id = $1';
+    let values = [req.body.document_id];
+    console.log(values);
+    pool.query(text, values, (err, dbRes) => {
+        console.log(err, dbRes);
+        res.send(dbRes);
+    });
+    console.log(req);
+});
 module.exports = router;

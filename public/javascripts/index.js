@@ -7,7 +7,7 @@ function callApi(method, url, data) {
         xhr.open(method, url);
         xhr.addEventListener("load", onload);
         xhr.addEventListener("error", onerror);
-        if (method == 'POST') {
+        if (method == 'POST' || 'DELETE') {
             xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         }
         if (data) {
@@ -47,6 +47,8 @@ async function loadTags() {
         for (let j = 0; j < mySli[i].tag_values.length; j++) {
             let vli = document.createElement("input");
             vli.setAttribute("type", "checkbox");
+            vli.setAttribute("chkValue", mySli[i].tag_name + "_" + mySli[i].tag_values[j])
+            vli.onclick = sideFilter;
             let label = document.createElement("label");
             let ali = document.createElement("li");
             label.innerHTML = mySli[i].tag_values[j] + "<br>";
@@ -86,7 +88,7 @@ async function loadDocuments() {
     docs = await callApi('GET', '/api/documents');
     let ul = document.getElementById("cList"),
         table = document.createElement("table");
-    table.setAttribute("id", "table");
+    table.id = "docTable";
     let myLi = docs;
     for (let i = 0; i < myLi.length; i++) {
         let row = document.createElement("tr");
@@ -157,6 +159,20 @@ let editRow = () => {
         alert("Pentru a edita un element din lista selectati un rand.");
     }
 }
+let deleteRow = () => {
+    let selectedRow = document.querySelector(".selectedTr");
+    let url, docId;
+    if (selectedRow) {
+        let row_data = selectedRow.getAttribute("row_data");
+        let myRow = JSON.parse(row_data);
+        console.log(myRow);
+        docId = { document_id: myRow.document_id };
+        console.log(docId);
+        url = '/api/deleteDoc';
+        callApi('DELETE', url, docId);
+        window.location.reload();
+    }
+}
 let applyBtn = async () => {
     let applData = {
         document_name: document_name.value, document_description: document_description.value, document_link: document_link.value
@@ -168,7 +184,9 @@ let applyBtn = async () => {
         for (let j = 0; j < tagvaluesElem.length; j++) {
             tagValues.push(tagvaluesElem[j].getAttribute("edit-tag-value"));
         }
-        tagsfsorSave[tagName] = tagValues;
+        if (tagValues.length > 0) {
+            tagsfsorSave[tagName] = tagValues;
+        }
     }
     applData.document_tags = tagsfsorSave;
 
@@ -184,15 +202,12 @@ let applyBtn = async () => {
         url = '/api/saveDoc';
     }
     console.log(applData);
-
-    await callApi('POST', url, applData);
-
-    if (document_link.value) {
-        window.location.reload();
-    } else {
+    if (!document_link.value || !document_name.value || !document_description.value || tagsfsorSave == {}) {
         alert("Introduceti valori");
+        return;
     }
-
+    await callApi('POST', url, applData);
+    window.location.reload();
 }
 
 let exitBtn = () => {
@@ -215,8 +230,39 @@ function srcBar() {
         }
     }
 }
+let a1Ina2 = (array1, array2) => {
+}
+let getRowDataFilterKeys = (tagData) => {
+    let filterKeys = [];
+    let tagKeys = Object.keys(tagData);
+    for (let i = 0; i < tagKeys.length; i++) {
+        let rowDataKeys = tagKeys[i];
+        for (let j = 0; j < rowDataKeys[j].length; j++) {
+            let rowKeys = rowDataKeys + "_" + rowDataKeys[j];
+            filterKeys.push(rowKeys);
+        }
+    }
+    return filterKeys;
+}
+let getSideFilterKeys = () => {
+    let filterKeys = [];
+    let chkBox = sList.querySelectorAll("input[type='checkbox']:checked");
+    for (let i = 0; i < chkBox.length; i++) {
+        let chkKey = chkBox[i].getAttribute("chkValue");
+        filterKeys.push(chkKey);
+    }
+    return filterKeys;
+}
 let sideFilter = () => {
-    let chkBox = document.querySelectorAll("input [type='checkbox']");
-
-    console.log(chkBox);
+    let sideFilterKeys = getSideFilterKeys();
+    let rows = docTable.rows;
+    for (let i = 0; i < rows.length; i++) {
+        let tagData = JSON.parse(rows[i].getAttribute("row_data")).document_tags;
+        let rowFilterKeys = getRowDataFilterKeys(tagData);
+        if (a1Ina2(sideFilterKeys, rowFilterKeys)) {
+            rows[i].classList.remove("hidden");
+        } else {
+            rows[i].classList.add("hidden");
+        }
+    }
 }
