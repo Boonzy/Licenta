@@ -29,8 +29,17 @@ function callApi(method, url, data) {
 }
 
 window.onload = async () => {
+    await loadUserProfile()
     await loadTags();
     await loadDocuments();
+}
+
+async function loadUserProfile() {
+    let userProfile = await callApi("GET", "/api/userProfile");
+    profile.textContent = `${userProfile.first_name} ${userProfile.last_name} [${userProfile.role_name}]`;
+    if (userProfile.role_id == 1) {
+        profBtn.remove();
+    }
 }
 
 async function loadTags() {
@@ -163,6 +172,7 @@ let deleteRow = () => {
         window.location.reload();
     }
 }
+
 let applyBtn = async () => {
     let applData = {
         document_name: document_name.value, document_description: document_description.value, document_link: document_link.value
@@ -203,7 +213,6 @@ let applyBtn = async () => {
 let exitBtn = () => {
     document.getElementById("modifyForm").classList.add("hidden");
 }
-
 function srcBar() {
     let input, filter, ul, li, a, i, txtValue;
     input = document.getElementById("contentSearch");

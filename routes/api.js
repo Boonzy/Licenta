@@ -19,12 +19,13 @@ router.get('/current_time', function (req, res, next) {
 });
 
 router.post('/userCheck', function (req, res, next) {
-    let text = 'select username,password_hash from users where username = $1 and password_hash=$2 ';
+    let text = 'select user_id from users where username = $1 and password_hash=$2 ';
     let values = [req.body.username, req.body.password];
     pool.query(text, values, (err, dbRes) => {
         console.log(err, dbRes);
         if (dbRes.rows.length > 0) {
             req.session.loggedIn = true;
+            req.session.user_id = dbRes.rows[0].user_id;
             res.send({ ok: true });
         } else {
             res.send({ ok: false });
@@ -50,7 +51,17 @@ router.get('/documents', function (req, res, next) {
         res.send(dbRes.rows);
     });
 });
-
+router.get('/userProfile', function (req, res, next) {
+    pool.query(`
+    select u.first_name,u.last_name,r.role_id,r.role_name 
+    from users u 
+        join user_roles ur ON u.user_id = ur.user_id 
+        join roles r on r.role_id =ur.role_id 
+    where u.user_id = $1;`, [req.session.user_id], (err, dbRes) => {
+            console.log(err, dbRes)
+            res.send(dbRes.rows[0]);
+        });
+});
 router.post('/saveDoc', function (req, res, next) {
     let text = 'insert into documents (document_link,document_tags,document_name,document_description) VALUES ($1, $2, $3 ,$4) returning document_id';
     let values = [req.body.document_link, req.body.document_tags, req.body.document_name, req.body.document_description];
