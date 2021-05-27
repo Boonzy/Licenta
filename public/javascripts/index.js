@@ -59,16 +59,6 @@ async function loadTags() {
     }
 }
 
-/*function listLoad(e){
-  console.log(this);
-    let ul = document.getElementById("cList");
-    let myLi = JSON.parse(this.responseText);
-  for(i = 0; i < myLi.length; i++){
-        let li = document.createElement("li");
-        li.innerHTML = myLi[i].first_name;
-        ul.appendChild(li);
-    }
-}*/
 function listTags(e) {
     console.log(this);
 
@@ -231,14 +221,18 @@ function srcBar() {
     }
 }
 let a1Ina2 = (array1, array2) => {
+    let found = array1.every(elem => array2.indexOf(elem) > -1);
+    return found;
 }
 let getRowDataFilterKeys = (tagData) => {
     let filterKeys = [];
     let tagKeys = Object.keys(tagData);
+    console.log(tagData);
     for (let i = 0; i < tagKeys.length; i++) {
-        let rowDataKeys = tagKeys[i];
-        for (let j = 0; j < rowDataKeys[j].length; j++) {
-            let rowKeys = rowDataKeys + "_" + rowDataKeys[j];
+        let tagName = tagKeys[i],
+            tagValues = tagData[tagName];
+        for (let j = 0; j < tagValues.length; j++) {
+            let rowKeys = tagName + "_" + tagValues[j];
             filterKeys.push(rowKeys);
         }
     }
@@ -265,4 +259,11 @@ let sideFilter = () => {
             rows[i].classList.add("hidden");
         }
     }
+}
+
+let logOut = async () => {
+    if (await callApi("POST", "/api/logOut")) {
+        window.location.reload();
+    }
+
 }

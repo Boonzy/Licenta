@@ -80,17 +80,6 @@ tr:hover {
   outline: none;
   color: rgb(0, 0, 0);
 }
-.dBtn{
-  background-color: white;
-  width: 7rem;
-  margin: 1rem;
-  border: 0.3rem solid rgb(121, 122, 122);
-  height: auto;
-  padding: 0.5rem 0.1rem 0.5rem 0.1rem;
-  border-radius: 5rem;
-  outline: none;
-  color: rgb(0, 0, 0);
-}
 .cBtn:hover{
   background-color: rgb(207, 207, 207);
 }
@@ -105,17 +94,6 @@ tr:hover {
   left: 15rem;
 }
 .aBtn{
-  background-color: white;
-  width: 7rem;
-  margin: 1rem;
-  border: 0.3rem solid rgb(121, 122, 122);
-  height: auto;
-  padding: 0.5rem 0.1rem 0.5rem 0.1rem;
-  border-radius: 5rem;
-  outline: none;
-  color: rgb(0, 0, 0);
-}
-.eBtn{
   background-color: white;
   width: 7rem;
   margin: 1rem;
@@ -170,4 +148,7 @@ tr:hover {
   border-radius: 5rem;
   outline: none;
   color: rgb(0, 0, 0);
+}
+#logOut{
+  float: right;
 }

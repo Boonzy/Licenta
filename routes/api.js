@@ -18,13 +18,26 @@ router.get('/current_time', function (req, res, next) {
     });
 });
 
-router.get('/users', function (req, res, next) {
-    pool.query('SELECT first_name from users', (err, dbRes) => {
-        console.log(err, dbRes)
-        res.send(dbRes.rows);
+router.post('/userCheck', function (req, res, next) {
+    let text = 'select username,password_hash from users where username = $1 and password_hash=$2 ';
+    let values = [req.body.username, req.body.password];
+    pool.query(text, values, (err, dbRes) => {
+        console.log(err, dbRes);
+        if (dbRes.rows.length > 0) {
+            req.session.loggedIn = true;
+            res.send({ ok: true });
+        } else {
+            res.send({ ok: false });
+            req.session.loggedIn = false;
+        }
     });
+    console.log(req);
 });
-
+router.post('/logOut', function (req, res, next) {
+    req.session.loggedIn = false;
+    res.send(true);
+    console.log(req);
+});
 router.get('/tags', function (req, res, next) {
     pool.query('select * from tags order by tag_id asc;', (err, dbRes) => {
         console.log(err, dbRes)
