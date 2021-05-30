@@ -1,5 +1,5 @@
 "use strict";
-var tags, docs;
+var tags, docs, users, roles;
 
 function callApi(method, url, data) {
     let promise = new Promise((resolve, reject) => {
@@ -39,7 +39,18 @@ async function loadUserProfile() {
     profile.textContent = `${userProfile.first_name} ${userProfile.last_name} [${userProfile.role_name}]`;
     if (userProfile.role_id == 1) {
         profBtn.remove();
+        adminPageBtn.remove();
     }
+    if (userProfile.role_id == 2) {
+        adminPageBtn.remove();
+    }
+    if (userProfile.role_id == 3) {
+        profBtn.remove();
+    }
+}
+
+let adminPage = () => {
+    window.location = "/admin";
 }
 
 async function loadTags() {

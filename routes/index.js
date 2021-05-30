@@ -10,4 +10,13 @@ router.get('/', function (req, res, next) {
   }
 });
 
+router.get('/admin', function (req, res, next) {
+  if (req.session.loggedIn) {
+    res.render('admin', { title: 'School Smart Solutions' });
+  } else {
+    res.render("login");
+  }
+});
+
 module.exports = router;
+

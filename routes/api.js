@@ -51,6 +51,12 @@ router.get('/documents', function (req, res, next) {
         res.send(dbRes.rows);
     });
 });
+router.get('/roles', function (req, res, next) {
+    pool.query('select * from roles', (err, dbRes) => {
+        console.log(err, dbRes)
+        res.send(dbRes.rows);
+    });
+});
 router.get('/userProfile', function (req, res, next) {
     pool.query(`
     select u.first_name,u.last_name,r.role_id,r.role_name 
@@ -62,6 +68,17 @@ router.get('/userProfile', function (req, res, next) {
             res.send(dbRes.rows[0]);
         });
 });
+router.get('/userList', function (req, res, next) {
+    pool.query(`
+    select u.first_name,u.last_name,r.role_id,r.role_name 
+    from users u 
+        join user_roles ur ON u.user_id = ur.user_id 
+        join roles r on r.role_id =ur.role_id ;`, (err, dbRes) => {
+            console.log(err, dbRes)
+            res.send(dbRes.rows);
+        });
+});
+
 router.post('/saveDoc', function (req, res, next) {
     let text = 'insert into documents (document_link,document_tags,document_name,document_description) VALUES ($1, $2, $3 ,$4) returning document_id';
     let values = [req.body.document_link, req.body.document_tags, req.body.document_name, req.body.document_description];

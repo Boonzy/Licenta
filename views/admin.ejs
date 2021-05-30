@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<script src="javascripts/common.js"></script>
+<script src="javascripts/admin.js"></script>
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+    <div class="container">
+        <div class="header-container">
+            <div>
+                <img src="/images/S6W9yfEf_400x400-removebg-preview.png" width="60" height="60" style="float:left;padding: 0.5rem;">
+                <div class="headerFacultate">Universitatea Romano-Americana</div>
+                <div id="profileDiv" class="userProfile">
+                    <span id="profile"></span>
+                    <button id="homeBtn" onclick="home()" class="aBtn">Home</button>
+                    <button id="logOut" onclick="logOut()" class="aBtn">Log Out</button>
+                </div>
+            </div>
+        </div>
+        <div class="side-container">
+            <h3 style="padding: 1rem 1rem 0rem 1rem;text-decoration: underline;">Tabele</h3>
+            <span onclick="loadUsers()">Table Utilizatori</span>
+            <br>
+            <span onclick="loadTags()">Tabel Atribute</span>
+            <br>
+            <span onclick="loadRoles()">Table Roluri</span>
+            <br>
+        </div>
+        <div class="document-container">
+            <div>
+                <input type="text" placeholder="Type Here..." id="contentSearch" class="contentSearch" onkeyup="srcBar()">
+                <div id="adminBtn">
+                    <button type="button" class="aBtn" id="addBtn" onclick="addEntry()">Adaugati</button>
+                    <button type="button" class="aBtn" id="editBtn" onclick="editEntry()">Editare</button>
+                    <button type="button" class="aBtn" id="removeBtn" onclick="deleteEntry()">Stergere</button>
+                </div>
+            </div>
+            <div id="modifyForm" class="modal hidden roundBorders">
+                <div class="modalHeader">
+                    <button type="button" class="exitBtn" id="exitBtn" onclick="exitBtn()">Close</button>
+                    <button type="button" class="applyBtn" id="applyBtn" onclick="applyBtn()">Apply</button>
+                </div>
+                <div class="modalContent pannelDiv">
+                    <div>
+                        <button type="button" class="addUser" id="addUser" onclick="addUser()"></button>
+                        <button type="button" class="addTags" id="addTags" onclick="addTags()"></button>
+                        <button type="button" class="addRoles" id="addRoles" onclick="addRoles()"></button>
+                    </div>
+                </div>
+            </div>
+            <div id="cList"></div>
+        </div>
+    </div>
+</body>
+
+</html>
