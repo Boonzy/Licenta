@@ -70,7 +70,7 @@ router.get('/userProfile', function (req, res, next) {
 });
 router.get('/userList', function (req, res, next) {
     pool.query(`
-    select u.first_name,u.last_name,r.role_id,r.role_name 
+    select u.user_id,u.first_name,u.last_name,r.role_id,r.role_name 
     from users u 
         join user_roles ur ON u.user_id = ur.user_id 
         join roles r on r.role_id =ur.role_id ;`, (err, dbRes) => {
@@ -108,4 +108,55 @@ router.delete('/deleteDoc', function (req, res, next) {
     });
     console.log(req);
 });
+router.delete('/deleteUser', function (req, res, next) {
+    console.log("delete user");
+    let text = 'delete from users where user_id = $1';
+    let values = [req.body.user_id];
+    console.log("Delete User", values);
+    pool.query(text, values, (err, dbRes) => {
+        console.log(err, dbRes);
+        if (err) {
+            return next(err);
+        }
+        res.send(dbRes);
+    });
+    console.log(req);
+});
+router.delete('/deleteTag', function (req, res, next) {
+    let text = 'delete from tags where tag_id = $1';
+    let values = [req.body.tag_id];
+    console.log(values);
+    pool.query(text, values, (err, dbRes) => {
+        console.log(err, dbRes);
+        res.send(dbRes);
+    });
+    console.log(req);
+});
+
+router.post('/addUser', function (req, res, next) {
+    let text = `with u as (insert into users(first_name, last_name,password_hash) values($1,$2,'qwe123') returning user_id) insert into user_roles(user_id, role_id) select user_id, $3 from u;`;
+    let values = [req.body.first_name, req.body.last_name, req.body.role_id];
+    pool.query(text, values, (err, dbRes) => {
+        console.log(err, dbRes);
+        res.send(dbRes);
+    });
+    console.log(req);
+});
+
+
+router.post('/updateUser', function (req, res, next) {
+    pool.query('UPDATE users SET first_name= $1, last_name=$2 where user_id=$3;', [req.body.first_name, req.body.last_name, req.body.user_id])
+        .then(res1 => {
+            return pool.query('update user_roles set role_id= $1 where user_id=$2;', [req.body.role_id, req.body.user_id]);
+        })
+        .then(res2 => {
+            res.send(res2);
+            return next(null, res2);
+        })
+        .catch(e => {
+            return next(e);
+        });
+    console.log(req);
+});
+
 module.exports = router;

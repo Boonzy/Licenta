@@ -41,16 +41,33 @@
                     <button type="button" class="aBtn" id="removeBtn" onclick="deleteEntry()">Stergere</button>
                 </div>
             </div>
-            <div id="modifyForm" class="modal hidden roundBorders">
+            <div id="modifyUser" class="modal hidden roundBorders">
                 <div class="modalHeader">
-                    <button type="button" class="exitBtn" id="exitBtn" onclick="exitBtn()">Close</button>
-                    <button type="button" class="applyBtn" id="applyBtn" onclick="applyBtn()">Apply</button>
+                    <button type="button" class="exitBtn" id="exitUserBtn" onclick="exitUserBtn()">Close</button>
+                    <button type="button" class="applyBtn" id="applyUserBtn" onclick="applyUserBtn()">Apply</button>
                 </div>
                 <div class="modalContent pannelDiv">
                     <div>
-                        <button type="button" class="addUser" id="addUser" onclick="addUser()"></button>
-                        <button type="button" class="addTags" id="addTags" onclick="addTags()"></button>
-                        <button type="button" class="addRoles" id="addRoles" onclick="addRoles()"></button>
+                        <input type="text" id="user_id" title="UserId" placeholder="Id Utilizator..." readonly class="smallId">
+                        <input type="text" id="first_name" placeholder="Nume..." title="Nume" class="blockSmallSpace">
+                        <input type="text" id="last_name" placeholder="Prenume..." title="Prenume" class="blockSmallSpace">
+                        <select id="role_name" name="roleSelect">
+                            <option value="1">Student</option>
+                            <option value="2">Profesor</option>
+                            <option value="3">Admin</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div id="modifyTag" class="modal hidden roundBorders">
+                <div class="modalHeader">
+                    <button type="button" class="exitBtn" id="exitTagBtn" onclick="exitTagBtn()">Close</button>
+                    <button type="button" class="applyBtn" id="applyTagBtn" onclick="applyTagBtn()">Apply</button>
+                </div>
+                <div class="modalContent pannelDiv">
+                    <div>
+                        <input type="text" id="tag_name" placeholder="Nume Atribut..." title="tagName" class="blockSmallSpace">
+                        <textarea type="text" id="tag_value" placeholder="Valoare Atribut..." title="tagValue" class="blockSmallSpace"></textarea>
                     </div>
                 </div>
             </div>

@@ -1,34 +1,6 @@
 "use strict";
 var tags, users, roles, data;
 
-function callApi(method, url, data) {
-    let promise = new Promise((resolve, reject) => {
-        let xhr = new XMLHttpRequest();
-        xhr.open(method, url);
-        xhr.addEventListener("load", onload);
-        xhr.addEventListener("error", onerror);
-        if (method == 'POST' || 'DELETE') {
-            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        }
-        if (data) {
-            data = JSON.stringify(data);
-        }
-        xhr.send(data);
-        function onload() {
-            let data;
-            if (this.responseText != '') {
-                data = JSON.parse(this.responseText);
-            }
-            return resolve(data);
-        }
-        function onerror(e) {
-            return reject(e);
-        }
-    });
-    return promise;
-}
-
-
 let highlightRow = (e) => {
     console.log(e.target.tagName);
     let row = e.target.closest("tr") || e.target, table = row.closest("table");
@@ -46,57 +18,131 @@ function createTable(data) {
         thead = document.createElement("thead"),
         tbody = document.createElement("tbody"),
         tr = document.createElement("tr");
-    for (let i = 0; i < data.length; i++) {
-        th = document.createElement("th");
-        th.innerHTML = Object.keys(data[i]);
+    table.id = "tabel";
+    // creeaza capat de tabel
+    let cols = Object.keys(data[0]);
+    for (let i = 0; i < cols.length; i++) {
+        let th = document.createElement("th");
+        th.innerHTML = cols[i];
         tr.appendChild(th);
         thead.appendChild(tr);
     }
-    for (let j = 0; j < data.length; j++) {
+    // adauga date
+    for (let i = 0; i < data.length; i++) {
+        tr = document.createElement("tr");
+        tr.onclick = highlightRow;
+        for (let j = 0; j < cols.length; j++) {
+            let td = document.createElement("td");
+            td.innerHTML = data[i][cols[j]];
+            tr.appendChild(td);
+            tr.setAttribute("row_data", JSON.stringify(data[i]))
+        }
         tbody.appendChild(tr);
     }
+    cList.innerHTML = "";
+    table.appendChild(thead);
+    table.appendChild(tbody);
+    cList.appendChild(table);
 }
 
 let loadUsers = async () => {
     data = await callApi('GET', '/api/userList');
-    let myLi = data;
-    for (let i = 0; i < myLi.length; i++) {
-        let row = document.getElementsByTagName("tr");
-        row.onclick = highlightRow;
-        row.innerHTML = `<td>${myLi[i].first_name}</td>
-        <td>${myLi[i].last_name}</td>
-        <td>${myLi[i].role_id}</td>
-        <td>${myLi[i].role_name}</td>`;
-    }
+    createTable(data);
 }
 let loadTags = async () => {
     data = await callApi('GET', '/api/tags');
-    let myLi = data;
-    for (let i = 0; i < myLi.length; i++) {
-        let row = document.getElementsByTagName("tr");
-        row.onclick = highlightRow;
-        row.innerHTML = `<td>${myLi[i].tag_name}</td>
-            <td>${Object.values(myLi[i].tag_values)}</td>`;
-    }
+    createTable(data)
 }
 let loadRoles = async () => {
     data = await callApi('GET', '/api/roles');
-    let myLi = data;
-    for (let i = 0; i < myLi.length; i++) {
-        let row = document.getElementsByTagName("tr");
-        row.onclick = highlightRow;
-        row.innerHTML = `<td>${myLi[i].role_name}</td>
-        <td>${myLi[i].role_id}</td>`;
-    }
+    createTable(data)
 }
 function renderModifyForm(selectedRow) {
-
+    let row_data = selectedRow.getAttribute("row_data");
+    let myRow = JSON.parse(row_data);
+    if (myRow.user_id) {
+        document.getElementById("modifyUser").classList.remove("hidden");
+        if (selectedRow) {
+            let rowData = selectedRow.getAttribute("row_data");
+            myRow = JSON.parse(rowData);
+            console.log(rowData);
+            first_name.value = myRow.first_name;
+            last_name.value = myRow.last_name;
+            role_name.value = myRow.role_id;
+            user_id.value = myRow.user_id;
+        } else {
+            first_name.value = "";
+            last_name.value = "";
+            user_id.value = "";
+        }
+    }
+    if (myRow.tag_id) {
+        document.getElementById("modifyTag").classList.remove("hidden");
+        if (selectedRow) {
+            let rowData = selectedRow.getAttribute("row_data");
+            myRow = JSON.parse(rowData);
+            console.log(rowData);
+            tag_name.value = myRow.tag_name;
+            tag_value.value = myRow.tag_values.join(",");
+        } else {
+            tag_name.value = "";
+            tag_value.value = "";
+        }
+    }
 }
 
-let addRow = () => {
-    renderModifyForm();
+
+let applyTagBtn = async () => {
+    let selectedRow = document.querySelector(".selectedTr");
+    let applData = {
+        tag_name: tag_name.value, tag_value: tag_value.value
+    }
+    if (selectedRow) {
+        let row_data = selectedRow.getAttribute("row_data");
+        let myRow = JSON.parse(row_data);
+        tag_name = tag_name.value;
+        tag_value = tag_values.split(",");
+    }
 }
-let editRow = () => {
+
+let applyUserBtn = async () => {
+    let selectedRow = document.querySelector(".selectedTr");
+    let applData = {
+        first_name: first_name.value, last_name: last_name.value, role_id: role_name.value, user_id: user_id.value
+    }
+    if (selectedRow) {
+        let row_data = selectedRow.getAttribute("row_data");
+        let myRow = JSON.parse(row_data);
+        applData.user_id = myRow.user_id;
+        let url = '/api/updateUser';
+        await callApi('POST', url, applData);
+    } else {
+        let url = '/api/addUser';
+        await callApi('POST', url, applData);
+    }
+    window.location.reload();
+}
+
+function renderUserForm() {
+    document.getElementById("modifyUser").classList.remove("hidden");
+    first_name.value = "";
+    last_name.value = "";
+    user_id.value = "";
+}
+function renderTagForm() {
+    document.getElementById("modifyTag").classList.remove("hidden");
+    tag_name.value = "";
+    tag_value.value = "";
+}
+let addEntry = () => {
+    let dataVals = Object.keys(data[0]);
+    if (dataVals[0] == "user_id") {
+        renderUserForm()
+    } else {
+        renderTagForm()
+    }
+}
+let editEntry = () => {
     let selectedRow = document.querySelector(".selectedTr");
     if (selectedRow) {
         renderModifyForm(selectedRow);
@@ -104,16 +150,35 @@ let editRow = () => {
         alert("Pentru a edita un element din lista selectati un rand.");
     }
 }
-let deleteRow = () => {
-
+let deleteEntry = async () => {
+    let selectedRow = document.querySelector(".selectedTr");
+    let url, userId, tagId;
+    if (selectedRow) {
+        let row_data = selectedRow.getAttribute("row_data");
+        let myRow = JSON.parse(row_data);
+        console.log(myRow);
+        if (myRow.user_id) {
+            userId = { user_id: myRow.user_id };
+            console.log(userId);
+            url = '/api/deleteUser';
+            await callApi('DELETE', url, userId);
+            window.location.reload();
+        }
+        if (myRow.tag_id) {
+            tagId = { tag_id: myRow.tag_id };
+            console.log(tagId);
+            url = '/api/deleteTag';
+            await callApi('DELETE', url, tagId);
+            window.location.reload();
+        }
+    }
 }
 
-let applyBtn = async () => {
-
+let exitUserBtn = () => {
+    document.getElementById("modifyUser").classList.add("hidden");
 }
-
-let exitBtn = () => {
-    document.getElementById("modifyForm").classList.add("hidden");
+let exitTagBtn = () => {
+    document.getElementById("modifyTag").classList.add("hidden");
 }
 
 function srcBar() {

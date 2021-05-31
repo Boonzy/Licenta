@@ -19,6 +19,7 @@ function callApi(method, url, data) {
             return resolve(data);
         }
         function onerror(e) {
+            console.log("error callapi", e);
             return reject(e);
         }
     });
