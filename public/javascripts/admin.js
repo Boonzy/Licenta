@@ -84,9 +84,11 @@ function renderModifyForm(selectedRow) {
             console.log(rowData);
             tag_name.value = myRow.tag_name;
             tag_value.value = myRow.tag_values.join(",");
+            tag_id.value = myRow.tag_id;
         } else {
             tag_name.value = "";
             tag_value.value = "";
+            tag_id.value = "";
         }
     }
 }
@@ -95,14 +97,21 @@ function renderModifyForm(selectedRow) {
 let applyTagBtn = async () => {
     let selectedRow = document.querySelector(".selectedTr");
     let applData = {
-        tag_name: tag_name.value, tag_value: tag_value.value
+        tag_name: tag_name.value, tag_value: tag_value.value.split(",")
     }
     if (selectedRow) {
         let row_data = selectedRow.getAttribute("row_data");
         let myRow = JSON.parse(row_data);
-        tag_name = tag_name.value;
-        tag_value = tag_values.split(",");
+        applData.tag_id = myRow.tag_id;
+        let url = '/api/updateTag';
+        await callApi('POST', url, applData);
+
+    } else {
+        let url = '/api/addTag';
+        await callApi('POST', url, applData);
     }
+    window.location.reload();
+
 }
 
 let applyUserBtn = async () => {

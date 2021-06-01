@@ -145,7 +145,7 @@ router.post('/addUser', function (req, res, next) {
 
 
 router.post('/updateUser', function (req, res, next) {
-    pool.query('UPDATE users SET first_name= $1, last_name=$2 where user_id=$3;', [req.body.first_name, req.body.last_name, req.body.user_id])
+    pool.query('UPDATE users SET first_name=$1, last_name=$2 where user_id=$3;', [req.body.first_name, req.body.last_name, req.body.user_id])
         .then(res1 => {
             return pool.query('update user_roles set role_id= $1 where user_id=$2;', [req.body.role_id, req.body.user_id]);
         })
@@ -156,6 +156,26 @@ router.post('/updateUser', function (req, res, next) {
         .catch(e => {
             return next(e);
         });
+    console.log(req);
+});
+
+router.post('/addTag', function (req, res, next) {
+    let text = `insert into tags (tag_name, tag_value) values ($1,$2)`;
+    let values = [req.body.tag_name, req.body.tag_value];
+    pool.query(text, values, (err, dbRes) => {
+        console.log(err, dbRes);
+        res.send(dbRes);
+    });
+    console.log(req);
+});
+
+router.post('/updateTag', function (req, res, next) {
+    let text = `update tags set tag_name=$1, tag_values=$2 where tag_id = $3`;
+    let values = [req.body.tag_name, req.body.tag_value, req.body.tag_id];
+    pool.query(text, values, (err, dbRes) => {
+        console.log(err, dbRes);
+        res.send(dbRes);
+    });
     console.log(req);
 });
 
